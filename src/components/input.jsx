@@ -22,7 +22,7 @@ class Input extends Component {
 
   handleChange(event) {
     let myIPAddress = event.target.value;
-    this.setState({ ipAddress: myIPAddress });
+    this.setState({ ipAddress: myIPAddress.trim() });
   }
 
   handleSubmit(event) {
