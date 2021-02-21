@@ -5,7 +5,19 @@ class Input extends Component {
     super(props);
     this.state = {
       ipAddress: "",
+      erroMsg: "",
     };
+  }
+
+  validate() {
+    const ipRegExp = /((0|1[0-9]{0,2}|2[0-9]?|2[0-4][0-9]|25[0-5]|[3-9][0-9]?)\.){3}(0|1[0-9]{0,2}|2[0-9]?|2[0-4][0-9]|25[0-5]|[3-9][0-9]?)/;
+    if (this.state.ipAddress === "")
+      return "A valid IPv4 is require in the form xxx.xxx.xxx.xxx";
+    if (this.state.ipAddress) {
+      if (!ipRegExp.test(this.state.ipAddress))
+        return "A valid IPv4 is require in the form xxx.xxx.xxx.xxx";
+      else return null;
+    }
   }
 
   handleChange(event) {
@@ -15,9 +27,15 @@ class Input extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const error = this.validate();
+    if (error) {
+      this.setState({ ipAddress: "", erroMsg: error });
+      event.target.reset();
+      return;
+    }
     this.props.onNewIPAddress(this.state.ipAddress);
     event.target.reset();
-    this.setState({ ipAddress: "" });
+    this.setState({ ipAddress: "", erroMsg: error });
   }
 
   render() {
@@ -36,6 +54,11 @@ class Input extends Component {
             placeholder="Type IP address to search"
             onChange={(event) => this.handleChange(event)}
           />
+          {this.state.erroMsg && (
+            <div className="alert alert-danger" role="alert">
+              {this.state.erroMsg}
+            </div>
+          )}
           <button className="btn btn-primary mt-3" type="submit">
             Search
           </button>
