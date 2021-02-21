@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Input from "./components/input";
 import InfoTable from "./components/infoTable";
+import Map from "./components/map";
 
 import http from "./services/httpServices";
 
@@ -12,8 +13,6 @@ class App extends Component {
   };
 
   async getIPdata(ipAddress) {
-    console.log("ip", ipAddress);
-    console.log("key", process.env.REACT_APP_IPDATA_KEY);
     const response = await http.get(
       `https://api.ipdata.co/${ipAddress}?api-key=${process.env.REACT_APP_IPDATA_KEY}`
     );
@@ -33,6 +32,7 @@ class App extends Component {
           onNewIPAddress={(myIpAddress) => this.handleNewIPAddress(myIpAddress)}
         />
         <InfoTable ipInfo={this.state.ipInfo} />
+        <Map ipInfo={this.state.ipInfo} />
       </React.Fragment>
     );
   }

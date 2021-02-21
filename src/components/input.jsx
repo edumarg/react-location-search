@@ -40,13 +40,13 @@ class Input extends Component {
 
   render() {
     return (
-      <div className="my-input">
+      <div className="center">
         <form onSubmit={(event) => this.handleSubmit(event)}>
           <label htmlFor="ipInput" className="form-label">
             IP address
           </label>
           <input
-            class="form-control"
+            className="form-control"
             autoFocus
             id="ipInput"
             name="ipInput"
